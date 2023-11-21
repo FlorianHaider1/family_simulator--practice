@@ -1,12 +1,6 @@
 # This Programm is household-simulation inspired by "The Sims" to practice OOP. 
-# Classes and Attributes, including constructor
-#   Base class Person with attributes like name, age, and gender.
-#   Base class Furniture: type, color   
-#   Base class Consumable: name, expiration_date 
-# Composition:  
-#   Composition: Base class house: containing Person, Furniture, and Consumable objects.
-#   Composition: create rooms in the house and purposes for the rooms
-#   Composition: link e.g. parents and children
+# Classes & Attributes (constructor!): Person(name, age, gender). Furniture (type, color). Consumable (name, expiration_date) 
+# Composition:  house (contains Rooms, Person, Furniture, Consumables). Link Generations (grandparents, parents and children)
 # x Inheritance: Extend Person class: Child, Parent, and Grandparent. Be aware of multiple inheritances.
 # x Encapsulation, Properties (Getter & Setter):  make the age attribute private and provide a getter and setter.
 # x Copy vs. Deepcopy: Use shallow and deep copies with objects.
