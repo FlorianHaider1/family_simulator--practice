@@ -17,6 +17,28 @@
 # - Object Lifetime & Garbage Collector: Experiment with creating and deleting objects, and observe how Python's garbage collector works.
 # - Make a usecase where set/get is better than setter/getter
 import tkinter as tk
+import sound_player
+import threading
+
+player = sound_player.Player() 
+
+def soundtrack(song, times):
+    song_selected = False
+    if song == "katyusha":
+        song_selected = sound_player.Song(sound_player.Song_collection.katyusha, 120)
+    elif song == "korobeiniki":
+        song_selected = sound_player.Song(sound_player.Song_collection.korobeiniki, 120)
+    elif song == "the_shire":
+        song_selected = sound_player.Song(sound_player.Song_collection.the_shire, 90)
+    elif song == "war_ensemble":
+        song_selected = sound_player.Song(sound_player.Song_collection.war_ensemble_intro, 150)
+
+    if song_selected: 
+        sound_player.playback(song_selected, times)
+
+def play_song_in_thread(song, times):
+    thread = threading.Thread(target=soundtrack, args=(song, times))
+    thread.start()
 
 class Person:
     def __init__(self, name, age, gender):
@@ -201,6 +223,13 @@ pearson_rb.pack(side="left", padx = 10)
 bennett_rb = tk.Radiobutton(top_frame, text="Bennett Family", variable=selected_family_var, value ="Bennett", command=update_family_info)
 bennett_rb.pack(side="left", padx = 10)
 
+play_shire_button = tk.Button(top_frame, text="Play 'The Shire'", command=lambda: play_song_in_thread("the_shire", 1))
+play_shire_button.pack(side="right", padx = 10)
+play_koro_button = tk.Button(top_frame, text="Play 'Korobeiniki'", command=lambda: play_song_in_thread("korobeiniki", 1))
+play_koro_button.pack(side="right", padx = 10)
+play_katy_button = tk.Button(top_frame, text="Play 'Katyusha'", command=lambda: play_song_in_thread("katyusha", 1))
+play_katy_button.pack(side="right", padx = 10)
+
 instructions = tk.Text(root, height = 20, width = 25)
 instructions.pack(side="left", padx=10, pady=10)
 
@@ -221,6 +250,12 @@ start_button.pack(side="top", pady=10)
 
 text_output = tk.Text(root, height = 100, width = 50)
 text_output.pack(pady=10)
+
+def on_close():
+    player.audio_terminate()
+    root.destroy()
+
+root.protocol("WM_DELETE_WINDOW", on_close)
 
 update_instructions(pearson_family)
 
